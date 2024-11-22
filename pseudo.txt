@@ -1,0 +1,438 @@
+INICIO
+    Entero totalIntegrantes, mainOpcion
+    Constante Entero INDICE_INTEGRANTE_CEDULA = 0
+    Constante Entero INDICE_INTEGRANTE_NOMBRE = 1
+    Constante Entero INDICE_INTEGRANTE_TELEFONO = 2
+    totalIntegrantes = 0
+    Entero totalvehiculos
+    Constante Entero INDICE_VEHICULO_PLACA=0
+    Constante Entero INDICE_VEHICULO_NOMBRE=1
+    Constante Entero INDICE_VEHICULO_MARCA=2
+    Constante Entero INDICE_VEHICULO_COLOR=3
+    Constante Entero INDICE_VEHICULO_CILINDRADA=4
+    Constante Entero INDICE_VEHICULO_ANIO=5
+    Constante Entero INDICE_VEHICULO_INTEGRANTE_CEDULA=6
+    totalVehiculos = 0
+    Constante Entero MAX_INTEGRANTES = 100
+    Constante Entero MAX_VEHICULOS = 500
+    Vector integrantes[MAX_INTEGRANTES][3]
+    Vector vehiculos[MAX_VEHICULOS][7]
+
+    FUNCION buscarIntegrante(Cadena cedula)
+        PARA i=0;i<totalIntegrantes;i=i+1  HACER
+            SI integrantes[i][INDICE_INTEGRANTE_CEDULA] == cedula ENTONCES
+                RETORNAR i
+            FIN SI
+        FIN PARA
+        RETORNAR -1
+    FIN FUNCION
+
+    PROCEDIMIENTO crearIntegrante()
+        SI totalIntegrantes < MAX_INTEGRANTES ENTONCES
+            Cadena cedula, nombre, telefono
+            IMPRIMA "Digite cédula del integrante"
+            LEA cedula
+            IMPRIMA "Digite nombre del integrante"
+            LEA nombre
+            IMPRIMA "Digite telefono del integrante"
+            LEA telefono
+            Entero integranteIndice
+            integranteIndice = buscarIntegrante(cedula)
+            SI integranteIndice < 0 ENTONCES
+                integrantes[totalIntegrantes][INDICE_INTEGRANTE_CEDULA] = cedula
+                integrantes[totalIntegrantes][INDICE_INTEGRANTE_NOMBRE] = nombre
+                integrantes[totalIntegrantes][INDICE_INTEGRANTE_TELEFONO] = telefono
+                totalIntegrantes = totalIntegrantes + 1
+                IMPRIMA "Integrante creado exitosamente"
+            SINO
+                IMPRIMA "Error: Ya existe un integrante con esa cédula"
+            FIN SI
+        SINO
+            IMPRIMA "Error: Ha llegado al límite de integrantes"
+        FIN SI
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO mostrarIntegrante(Cadena cedula)
+        Entero indiceIntegrante
+        indiceIntegrante = buscarIntegrante(cedula)
+        SI indiceIntegrante > -1 ENTONCES
+            IMPRIMA "Cédula:", integrantes[indiceIntegrante][INDICE_INTEGRANTE_CEDULA]
+            IMPRIMA "Nombre:", integrantes[indiceIntegrante][INDICE_INTEGRANTE_NOMBRE]
+            IMPRIMA "Teléfono:", integrantes[indiceIntegrante][INDICE_INTEGRANTE_TELEFONO]
+        SINO
+            IMPRIMA "No existe ningún integrante con la cédula ingresada"
+        FIN SI
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO listarIntegrantes()
+        SI totalIntegrantes == 0 ENTONCES
+            IMPRIMA "No hay integrantes registrados"
+        SINO
+            Para i = 0 ; i < totalIntegrantes; i=i+1 HACER
+                IMPRIMA "Cédula:", integrantes[i][INDICE_INTEGRANTE_CEDULA],
+                " Nombre:", integrantes[i][INDICE_INTEGRANTE_NOMBRE],
+                " Teléfono:", integrantes[i][INDICE_INTEGRANTE_TELEFONO]
+            FIN PARA
+        FIN SI
+    FIN PROCEDIMIENTO
+    
+    PROCEDIMIENTO actualizarIntegrante()
+        Cadena cedula, nombre, telefono
+        IMPRIMA "Digite la cédula del integrante a modificar"
+        LEA cedula
+        Entero integranteIndice
+        integranteIndice = buscarIntegrante(cedula)
+        SI integranteIndice > -1 ENTONCES
+            Entero opcion
+            opcion = -1
+            MIENTRAS opcion != 3 HACER
+                IMPRIMA "¿Que dato desea actualizar?"
+                IMPRIMA "1. Nombre"
+                IMPRIMA "2. Teléfono"
+                IMPRIMA "3. Salir"
+                LEA opcion
+                SELECCIONAR opcion
+                    CASO 1:
+                        IMPRIMA "Digite nuevo nombre del integrante"
+                        LEA nombre
+                        integrantes[integranteIndice][INDICE_INTEGRANTE_NOMBRE] = nombre
+                        IMPRIMA "Nombre actualizado exitosamente"
+                        SALIR
+                    CASO 2:
+                        IMPRIMA "Digite nuevo teléfono del integrante"
+                        LEA telefono
+                        integrantes[integranteIndice][INDICE_INTEGRANTE_TELEFONO] = telefono
+                        IMPRIMA "Telefono actualizado exitosamente"
+                        SALIR
+                    CASO 3:
+                        SALIR
+                    DEFECTO:
+                        IMPRIMA "Opción no válida, intente nuevamente"
+                FIN SELECCIONAR
+            FIN MIENTRAS
+        SINO            
+            IMPRIMA "integrante no encontrado"
+        FIN SI
+    FIN PROCEDIMIENTO
+
+    FUNCION buscarVehiculo(Cadena placaVehiculo)
+        PARA i=0;i<totalVehiculos;i=i+1  HACER
+            SI vehiculos[i][INDICE_VEHICULO_PLACA] == placaVehiculo ENTONCES
+                RETORNAR i
+            FIN SI
+        FIN PARA
+        RETORNAR -1
+    FIN FUNCION
+
+    PROCEDIMIENTO mostrarVehiculo(Cadena placa)
+        Entero indiceVehiculo = buscarVehiculo(placa)
+        SI indiceVehiculo > -1 ENTONCES
+            Entero indiceIntegrante = buscarIntegrante(vehiculos[indiceVehiculo][INDICE_VEHICULO_INTEGRANTE_CEDULA])
+            IMPRIMA "Placa:", vehiculos[indiceVehiculo][INDICE_VEHICULO_PLACA]
+            IMPRIMA "Nombre:", vehiculos[indiceVehiculo][INDICE_VEHICULO_NOMBRE]
+            IMPRIMA "Marca:", vehiculos[indiceVehiculo][INDICE_VEHICULO_MARCA]
+            IMPRIMA "Color:", vehiculos[indiceVehiculo][INDICE_VEHICULO_COLOR]
+            IMPRIMA "Cilindraje:", vehiculos[indiceVehiculo][INDICE_VEHICULO_CILINDRADA]
+            IMPRIMA "Año:", vehiculos[indiceVehiculo][INDICE_VEHICULO_ANIO]
+            IMPRIMA "Integrante:", "Cedula: ", integrantes[indiceIntegrante][INDICE_INTEGRANTE_CEDULA], "Nombre: ", integrantes[indiceIntegrante][INDICE_INTEGRANTE_NOMBRE]
+        SINO
+            IMPRIMA "No existe ningún vehiculo con la placa ingresada"
+        FIN SI
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO mostrarVehiculoEnLinea(Entero indiceVehiculo, Entero indiceIntegrante)
+        IMPRIMA "Placa:", vehiculos[indiceVehiculo][INDICE_VEHICULO_PLACA],
+            " Nombre:", vehiculos[indiceVehiculo][INDICE_VEHICULO_NOMBRE],
+            " Marca:", vehiculos[indiceVehiculo][INDICE_VEHICULO_MARCA],
+            " Color:", vehiculos[indiceVehiculo][INDICE_VEHICULO_COLOR],
+            " Cilindrada:", vehiculos[indiceVehiculo][INDICE_VEHICULO_CILINDRADA],
+            " Año:", vehiculos[indiceVehiculo][INDICE_VEHICULO_ANIO], 
+            " Integrante:", integrantes[indiceIntegrante][INDICE_INTEGRANTE_CEDULA], " - ", integrantes[indiceIntegrante][INDICE_INTEGRANTE_NOMBRE]
+    FIN PROCEDIMIENTO
+    PROCEDIMIENTO listarVehiculos()
+        SI totalVehiculos == 0 ENTONCES
+            IMPRIMA "No hay vehiculos registrados"
+        SINO
+            PARA i = 0 ; i < totalVehiculos; i=i+1 HACER
+                Entero indiceIntegrante
+                indiceIntegrante = buscarIntegrante(vehiculos[i][INDICE_VEHICULO_INTEGRANTE_CEDULA])
+                mostrarVehiculoEnLinea(i, indiceIntegrante)
+            FIN PARA
+        FIN SI
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO listarVehiculosIntegrante(Cadena cedula)
+        Entero indiceIntegrante, totalVehiculosIntegrante
+        indiceIntegrante = buscarIntegrante(cedula)
+        totalVehiculosIntegrante = 0
+        SI indiceIntegrante < 0 ENTONCES
+            IMPRIMA "No hay ningún integrante registrado con esa cédula"
+        SINO
+            PARA i = 0 ; i < totalVehiculos; i=i+1 HACER
+                SI vehiculos[i][INDICE_VEHICULO_INTEGRANTE_CEDULA] == cedula ENTONCES
+                    mostrarVehiculoEnLinea(i, indiceIntegrante)
+                    totalVehiculosIntegrante = totalVehiculosIntegrante + 1
+                FIN SI
+            FIN PARA
+            SI totalVehiculosIntegrante == 0 ENTONCES
+                IMPRIMA "El integrante no tiene vehículos asociados"
+            FIN SI
+        FIN SI
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO crearVehiculo()
+        SI totalVehiculos < MAX_VEHICULOS ENTONCES
+            Cadena placa, nombre, marca, color, cedula, cilindrada, anio
+
+            IMPRIMA "Digite cedula del dueño del vehiculo"
+            LEA cedula
+            Entero indiceIntegrante, totalVehiculosIntegrante
+            indiceIntegrante = buscarIntegrante(cedula)
+            SI indiceIntegrante == -1 ENTONCES
+                IMPRIMA "Error: No existe ningún integrante con la cédula ingresada"
+            SINO
+                IMPRIMA "Digite placa del vehiculo"
+                LEA placa
+                IMPRIMA "Digite nombre personalizado para el vehículo"
+                LEA nombre
+                IMPRIMA "Digite marca del vehiculo"
+                LEA marca
+                IMPRIMA "Digite color del vehiculo"
+                LEA color
+                IMPRIMA "Digite cilindrada del vehiculo"
+                LEA cilindrada
+                IMPRIMA "Digite año del vehiculo"
+                LEA anio
+                Entero vehiculoIndice
+                vehiculoIndice = buscarVehiculo(placa)
+                SI vehiculoIndice == -1 ENTONCES
+                    vehiculos[totalVehiculos][INDICE_VEHICULO_PLACA] = placa
+                    vehiculos[totalVehiculos][INDICE_VEHICULO_NOMBRE] = nombre
+                    vehiculos[totalVehiculos][INDICE_VEHICULO_MARCA] = marca
+                    vehiculos[totalVehiculos][INDICE_VEHICULO_COLOR] = color
+                    vehiculos[totalVehiculos][INDICE_VEHICULO_CILINDRADA] = cilindrada
+                    vehiculos[totalVehiculos][INDICE_VEHICULO_ANIO] = anio
+                    vehiculos[totalVehiculos][INDICE_VEHICULO_INTEGRANTE_CEDULA] = cedula
+                    totalVehiculos = totalVehiculos + 1
+                    IMPRIMA "Vehiculo registrado exitosamente"
+                SINO
+                    IMPRIMA "Error: Ya existe un un vehiculo con la placa ingresada"
+                    mostrarVehiculo(placa)
+                FIN SI
+            FIN SI
+        SINO
+            IMPRIMA "Error: Ha llegado al límite de vehículos"
+        FIN SI
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO actualizarVehiculo()
+        Cadena placa, nombre, marca, color, cedula, cilindrada, anio
+        Entero vehiculoIndice, opcion
+        IMPRIMA "Digite la placa del vehiculo a modificar"
+        LEA placa
+        vehiculoIndice = buscarVehiculo(placa)
+        SI vehiculoIndice > -1 ENTONCES
+            opcion = -1
+            MIENTRAS opcion != 7 HACER
+                IMPRIMA "¿Que dato desea actualizar?"
+                IMPRIMA "1. Nombre"
+                IMPRIMA "2. Marca"
+                IMPRIMA "3. Color"
+                IMPRIMA "4. Cilindrada"
+                IMPRIMA "5. Año"
+                IMPRIMA "6. Integrante"
+                IMPRIMA "7. Salir"
+                LEA opcion
+                SELECCIONAR opcion
+                    CASO 1:
+                        IMPRIMA "Digite nuevo nombre personalizado del vehiculo"
+                        LEA nombre
+                        vehiculos[vehiculoIndice][INDICE_VEHICULO_NOMBRE] = nombre
+                        SALIR
+                    CASO 2:
+                        IMPRIMA "Digite nueva marca del vehiculo"
+                        LEA marca
+                        vehiculos[vehiculoIndice][INDICE_VEHICULO_MARCA] = marca
+                        SALIR
+                    CASO 3:
+                        IMPRIMA "Digite nuevo color del vehiculo"
+                        LEA color
+                        vehiculos[vehiculoIndice][INDICE_VEHICULO_COLOR] = color
+                        SALIR
+                    CASO 4:
+                        IMPRIMA "Digite nueva cilindrada del vehiculo"
+                        LEA cilindrada
+                        vehiculos[vehiculoIndice][INDICE_VEHICULO_CILINDRADA] = cilindrada
+                        SALIR
+                    CASO 5:
+                        IMPRIMA "Digite nuevo año del vehiculo"
+                        LEA anio
+                        vehiculos[vehiculoIndice][INDICE_VEHICULO_ANIO] = anio
+                        SALIR
+                    CASO 6:
+                        IMPRIMA "Digite cedula del nuevo dueño del vehiculo"
+                        LEA cedula
+                        Entero indiceIntegrante
+                        indiceIntegrante = buscarIntegrante(cedula)
+                        SI indiceIntegrante > -1 ENTONCES
+                            vehiculos[vehiculoIndice][INDICE_VEHICULO_INTEGRANTE_CEDULA] = cedula
+                        SINO ENTONCES
+                            IMPRIMA "No existe un integrante con el número de cédula ingresado, operación cancelada"
+                        FIN SI
+                        SALIR
+                    CASO 7:
+                        SALIR
+                    DEFECTO:
+                        IMPRIMA "Opción no válida, intente nuevamente"
+                FIN SELECCIONAR
+            FIN MIENTRAS
+        SINO
+            IMPRIMA "No se encontró un vehículo con la placa ingresada"
+        FIN SI
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO eliminarVehiculo()
+        Entero vehiculoIndice, opcion
+        Cadena placa
+        opcion = -1
+        MIENTRAS opcion == -1 HACER
+            IMPRIMA "Digite placa del vehículo a eliminar"
+            LEA placa
+            vehiculoIndice = buscarVehiculo(placa)
+            SI vehiculoIndice > -1 ENTONCES
+                SI totalVehiculos == 1 ENTONCES
+                    totalVehiculos = 0
+                SINO
+                    PARA i = vehiculoIndice; i < totalVehiculos -1; i = i + 1 HACER
+                        vehiculos[i][INDICE_VEHICULO_PLACA] = vehiculos[i + 1][INDICE_VEHICULO_PLACA]
+                        vehiculos[i][INDICE_VEHICULO_NOMBRE] = vehiculos[i + 1][INDICE_VEHICULO_NOMBRE]
+                        vehiculos[i][INDICE_VEHICULO_MARCA] = vehiculos[i + 1][INDICE_VEHICULO_MARCA]
+                        vehiculos[i][INDICE_VEHICULO_COLOR] = vehiculos[i + 1][INDICE_VEHICULO_COLOR]
+                        vehiculos[i][INDICE_VEHICULO_CILINDRADA] = vehiculos[i + 1][INDICE_VEHICULO_CILINDRADA]
+                        vehiculos[i][INDICE_VEHICULO_ANIO] = vehiculos[i + 1][INDICE_VEHICULO_ANIO]
+                        vehiculos[i][INDICE_VEHICULO_INTEGRANTE_CEDULA] = vehiculos[i + 1][INDICE_VEHICULO_INTEGRANTE_CEDULA]
+                    FIN PARA
+                    totalVehiculos = totalVehiculos - 1
+                FIN SI
+                IMPRIMA "Vehículo eliminado exitosamente"
+                opcion = 0
+            SINO
+                IMPRIMA "No se encontró un vehículo con la placa ingresada, operación cancelada"
+            FIN SI
+        FIN MIENTRAS
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO moduloIntegrantes()
+        Entero opcion
+        opcion = -1
+        MIENTRAS opcion != 5 HACER
+            IMPRIMA "-- Módulo integrantes --"
+            IMPRIMA "Digite una opción para comenzar"
+            IMPRIMA "1. Crear integrante"
+            IMPRIMA "2. Mostrar integrante"
+            IMPRIMA "3. Listar integrantes"
+            IMPRIMA "4. Modificar integrante"
+            IMPRIMA "5. Volver al menú anterior"
+            LEA opcion
+            SELECCIONAR opcion
+                CASO 1:
+                    crearIntegrante()
+                    SALIR
+                CASO 2:
+                    Cadena cedula
+                    IMPRIMA "Digite cedula del integrante a mostrar"
+                    LEA cedula
+                    mostrarIntegrante(cedula)
+                    SALIR
+                CASO 3:
+                    listarIntegrantes()
+                    SALIR
+                CASO 4:
+                    actualizarIntegrante()
+                    SALIR
+                CASO 5:
+                    IMPRIMA "Volviendo al menú principal"
+                    SALIR
+                DEFECTO:
+                    IMPRIMA "Opción no válida"
+                    opcion = -1
+            FIN SELECCIONAR
+        FIN MIENTRAS
+    FIN PROCEDIMIENTO
+
+    PROCEDIMIENTO moduloVehiculos()
+        Entero opcion
+        opcion = -1
+        MIENTRAS opcion != 7 HACER
+            IMPRIMA "-- Módulo vehículos --"
+            IMPRIMA "Digite una opción para comenzar"
+            IMPRIMA "1. Crear vehículo"
+            IMPRIMA "2. Mostrar vehículo"
+            IMPRIMA "3. Listar vehículos"
+            IMPRIMA "4. Listar vehículos de un integrante"
+            IMPRIMA "5. Modificar vehículo"
+            IMPRIMA "6. Eliminar vehículo"
+            IMPRIMA "7. Volver al menú anterior"
+            LEA opcion
+            SELECCIONAR opcion
+                CASO 1:
+                    crearVehiculo()
+                    SALIR
+                CASO 2:
+                    Cadena placa
+                    IMPRIMA "Digite placa del vehículo a mostrar"
+                    LEA placa
+                    mostrarVehiculo(placa)
+                    SALIR
+                CASO 3:
+                    listarVehiculos()
+                    SALIR
+                CASO 4:
+                    Cadena cedula
+                    IMPRIMA "Digite cedula del integrante que desea listar vehículos"
+                    LEA cedula
+                    listarVehiculosIntegrante(cedula)
+                    SALIR
+                CASO 5:
+                    actualizarVehiculo()
+                    SALIR
+                CASO 6:
+                    eliminarVehiculo()
+                    SALIR
+                CASO 7:
+                    IMPRIMA "Volviendo al menú principal"
+                    SALIR
+                DEFECTO:
+                    IMPRIMA "Opción no válida"
+                    opcion = -1
+            FIN SELECCIONAR
+        FIN MIENTRAS
+    FIN PROCEDIMIENTO
+
+    mainOpcion = -1
+    MIENTRAS mainOpcion != 3 HACER
+        Entero opcion
+        IMPRIMA "-- Club de moteros Colombia Enduro --"
+        IMPRIMA "-- Menu principal --"
+        IMPRIMA "Digite una opción para iniciar un módulo"
+        IMPRIMA "1. Integrantes"
+        IMPRIMA "2. Vehiculos"
+        IMPRIMA "3. Salir"
+        LEA opcion
+        SELECCIONAR opcion
+            CASO 1:
+                moduloIntegrantes()
+                SALIR
+            CASO 2:
+                moduloVehiculos()
+                SALIR
+            CASO 3:
+                IMPRIMA "Cerrando el programa..."
+                SALIR
+            DEFECTO:
+                IMPRIMA "Opción no válida debe"
+                opcion = -1
+        FIN SELECCIONAR
+    FIN MIENTRAS
+
+FIN

@@ -1,7 +1,6 @@
 #include "integrante.h"
 #include <iostream>
 #include <limits>
-#include <conio.h>
 
 using namespace std;
 
@@ -40,7 +39,8 @@ void crearIntegrante(vector<Integrante>& integrantes) {
         cout << "Error: Ya existe un integrante con esa cédula\n";
     }
     cout << "Presione enter para continuar..."<<endl;
-    getch();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 void mostrarIntegrante(const vector<Integrante>& integrantes, const string& cedula) {
@@ -51,7 +51,8 @@ void mostrarIntegrante(const vector<Integrante>& integrantes, const string& cedu
         cout << "No existe ningún integrante con la cédula ingresada\n";
     }
     cout << "Presione enter para continuar..."<<endl;
-    getch();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 void listarIntegrantes(const vector<Integrante>& integrantes) {
@@ -63,7 +64,7 @@ void listarIntegrantes(const vector<Integrante>& integrantes) {
         }
     }
     cout << "Presione enter para continuar..."<<endl;
-    getch();
+    cin.get();
 }
 
 void actualizarIntegrante(vector<Integrante>& integrantes) {
@@ -85,7 +86,7 @@ void actualizarIntegrante(vector<Integrante>& integrantes) {
         cout << "2. Teléfono\n";
         cout << "3. Salir\n";
         cin >> opcion;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Limpiar buffer
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         switch (opcion) {
             case 1:
@@ -95,16 +96,16 @@ void actualizarIntegrante(vector<Integrante>& integrantes) {
                 integrantes[indice].nombre = nombre;
                 cout << "Nombre actualizado exitosamente\n";
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
                 break;
             case 2:
       		    system("cls");
                 cout << "Digite nuevo teléfono del integrante: ";
-                cin >> telefono;
+                getline(cin, telefono);
                 integrantes[indice].telefono = telefono;
                 cout << "Telefono actualizado exitosamente\n";
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
                 break;
             case 3:
       		    system("cls");
@@ -113,7 +114,7 @@ void actualizarIntegrante(vector<Integrante>& integrantes) {
       	        system("cls");
                 cout << "Opción no válida\n";
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
         }
     }
 }
@@ -130,6 +131,7 @@ void moduloIntegrantes(vector<Integrante>& integrantes) {
         cout << "5. Volver al menú principal\n";
         cout << "Digite una opción para comenzar ";
         cin >> opcion;
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
         switch (opcion) {
             case 1:
       	        system("cls");
@@ -164,7 +166,7 @@ void moduloIntegrantes(vector<Integrante>& integrantes) {
                 cout << "Opción no válida\n";
                 opcion = -1;
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
       	        system("cls");
         }
     }

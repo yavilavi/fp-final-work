@@ -3,7 +3,6 @@
 #include "integrante.h"
 #include <vector>
 #include <limits>
-#include <conio.h>
 
 using namespace std;
 
@@ -48,7 +47,8 @@ void crearVehiculo(vector<Vehiculo>& vehiculos, const vector<Integrante>& integr
     if (indiceIntegrante == -1) {
         cout << "Error: No existe ningún integrante con la cédula ingresada\n";
         cout << "Presione enter para continuar..."<<endl;
-        getch();
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.get();
         return;
     }
     cout << "Digite placa del vehiculo: ";
@@ -56,7 +56,8 @@ void crearVehiculo(vector<Vehiculo>& vehiculos, const vector<Integrante>& integr
     if (buscarVehiculo(vehiculos, toUpperCase(placa)) != -1) {
         cout << "Error: Ya existe un vehiculo con esa placa.\n";
         cout << "Presione enter para continuar..."<<endl;
-        getch();
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.get();
         return;
     }
     cout << "Digite nombre personalizado para el vehículo: ";
@@ -73,7 +74,8 @@ void crearVehiculo(vector<Vehiculo>& vehiculos, const vector<Integrante>& integr
     vehiculos.push_back(Vehiculo(toUpperCase(placa), nombre, marca, color, cilindrada, anio, cedula));
     cout << "Vehiculo registrado exitosamente\n";
     cout << "Presione enter para continuar..."<<endl;
-    getch();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 
@@ -85,7 +87,8 @@ void mostrarVehiculo(const vector<Vehiculo>& vehiculos, const vector<Integrante>
         cout << "No existe ningún vehiculo con la placa ingresada\n";
     }
     cout << "Presione enter para continuar..."<<endl;
-    getch();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 void listarVehiculos(const vector<Vehiculo>& vehiculos, const vector<Integrante>& integrantes) {
@@ -98,7 +101,7 @@ void listarVehiculos(const vector<Vehiculo>& vehiculos, const vector<Integrante>
         vehiculo.mostrar(integrantes);
     }
     cout << "Presione enter para continuar..."<<endl;
-    getch();
+    cin.get();
 }
 
 
@@ -108,7 +111,8 @@ void listarVehiculosIntegrante(const vector<Vehiculo>& vehiculos, const vector<I
     if (indiceIntegrante == -1) {
         cout << "Error: No existe ningún integrante con la cédula ingresada\n";
         cout << "Presione enter para continuar..."<<endl;
-        getch();
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.get();
         return;
     }
 
@@ -122,7 +126,8 @@ void listarVehiculosIntegrante(const vector<Vehiculo>& vehiculos, const vector<I
         cout << "El integrante no tiene vehículos asociados.\n";
     }
     cout << "Presione enter para continuar..."<<endl;
-    getch();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 
@@ -135,7 +140,8 @@ void actualizarVehiculo(vector<Vehiculo>& vehiculos, const vector<Integrante>& i
     if (indice == -1) {
         cout << "No se encontró un vehículo con la placa ingresada\n";
         cout << "Presione enter para continuar..."<<endl;
-        getch();
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.get();
         return;
     }
 
@@ -158,31 +164,31 @@ void actualizarVehiculo(vector<Vehiculo>& vehiculos, const vector<Integrante>& i
                 cout << "Digite nuevo nombre personalizado del vehiculo: ";
                 getline(cin, vehiculos[indice].nombre);
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
                 break;
             case 2:
                 cout << "Digite nueva marca del vehiculo: ";
                 getline(cin, vehiculos[indice].marca);
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
                 break;
             case 3:
                 cout << "Digite nuevo color del vehiculo: ";
                 getline(cin, vehiculos[indice].color);
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
                 break;
             case 4:
                 cout << "Digite nueva cilindrada del vehiculo: ";
                 cin >> vehiculos[indice].cilindrada;
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
                 break;
             case 5:
                 cout << "Digite nuevo año del vehiculo: ";
                 cin >> vehiculos[indice].anio;
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
                 break;
             case 6: {
                 string cedula;
@@ -194,7 +200,7 @@ void actualizarVehiculo(vector<Vehiculo>& vehiculos, const vector<Integrante>& i
                     cout << "No existe un integrante con ese número de cédula.\n";
                 }
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
                 break;
             }
             case 7:
@@ -204,7 +210,7 @@ void actualizarVehiculo(vector<Vehiculo>& vehiculos, const vector<Integrante>& i
       	        system("cls");
                 cout << "Opción no válida\n";
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
         }
     }
 }
@@ -223,7 +229,8 @@ void eliminarVehiculo(vector<Vehiculo>& vehiculos) {
     vehiculos.erase(vehiculos.begin() + indice);
     cout << "Vehículo eliminado exitosamente\n";
     cout << "Presione enter para continuar..."<<endl;
-    getch();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
 }
 
 
@@ -240,6 +247,7 @@ void moduloVehiculos(vector<Vehiculo>& vehiculos, vector<Integrante>& integrante
         cout << "7. Volver al menú principal\n";
         cout << "Digite una opción para comenzar ";
         cin >> opcion;
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         switch (opcion) {
             case 1:
@@ -289,7 +297,7 @@ void moduloVehiculos(vector<Vehiculo>& vehiculos, vector<Integrante>& integrante
                 cout << "Opción no válida\n";
                 opcion = -1;
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+                cin.get();
       	        system("cls");
         }
     }

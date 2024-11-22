@@ -3,7 +3,7 @@
 #include <vector>
 #include "integrante.h"
 #include "vehiculo.h"
-#include <conio.h>
+#include <limits>
 
 using namespace std;
 
@@ -26,7 +26,8 @@ int main() {
         cout << "2. Vehiculos\n";
         cout << "3. Salir\n";
         cout << "Digite una opción para iniciar un módulo: ";
-        cin >> opcion;
+    	cin >> opcion;
+    	cin.ignore(numeric_limits<streamsize>::max(), '\n');
         switch (opcion) {
             case 1:
       	        system("cls");
@@ -46,7 +47,7 @@ int main() {
       	        system("cls");
                 cout << "Opción no válida\n";
                 cout << "Presione enter para continuar..."<<endl;
-                getch();
+        		cin.get();
       	        system("cls");
         }
     }
